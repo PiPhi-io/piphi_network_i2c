@@ -212,3 +212,35 @@ def test_entities_include_pm_capabilities_for_pmsa003i(
     assert "pm2_5_standard_ugm3" in capabilities
     assert "particles_0_3um_per_0_1l" in capabilities
     assert "temperature_c" not in capabilities
+
+
+def test_state_telemetry_uses_stable_runtime_identity(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, object] = {}
+    monkeypatch.setattr(
+        state_module,
+        "schedule_telemetry_delivery",
+        lambda **kwargs: captured.update(kwargs),
+    )
+
+    state_module.schedule_state_telemetry(
+        {
+            "config_id": "i2c-config-1",
+            "device_id": "i2c-device-1",
+            "container_id": "container-1",
+        },
+        {
+            "connected": True,
+            "temperature_c": 22.5,
+            "sampled_at": "2026-07-26T12:00:00Z",
+            "error": "not forwarded",
+        },
+    )
+
+    assert captured["config_id"] == "i2c-config-1"
+    assert captured["device_id"] == "i2c-device-1"
+    assert captured["container_id"] == "container-1"
+    assert captured["metrics"] == {"connected": True, "temperature_c": 22.5}
+    assert captured["units"] == {"connected": "bool", "temperature_c": "C"}
+    assert captured["timestamp"] == "2026-07-26T12:00:00Z"
