@@ -5,7 +5,7 @@ description = "PiPhi integration runtime for local I2C environmental sensors."
 requires-python = ">=3.11"
 dependencies = [
   "fastapi>=0.115.0",
-  "piphi-runtime-kit-python==0.5.0",
+  "piphi-runtime-kit-python==0.6.0",
   "uvicorn[standard]>=0.30.0",
 ]
 
@@ -29,6 +29,9 @@ piphi_network_i2c = "piphi_network_i2c.main:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/piphi_network_i2c"]
