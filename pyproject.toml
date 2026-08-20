@@ -13,7 +13,7 @@ dependencies = [
 hardware = [
   "smbus2>=0.5.0",
   "bme680 @ git+https://github.com/pimoroni/bme680-python.git",
-  "bme280 @ git+https://github.com/pimoroni/bme280-python.git",
+  "pimoroni-bme280 @ git+https://github.com/pimoroni/bme280-python.git",
   "adafruit-circuitpython-ahtx0>=1.0.0",
   "adafruit-circuitpython-pm25",
   "adafruit-blinka>=8.0.0",
