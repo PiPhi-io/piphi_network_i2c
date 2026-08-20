@@ -9,16 +9,32 @@
     "website": "https://github.com/PiPhi-io"
   },
   "license": "Apache-2.0",
-  "image": "local/piphi-network-i2c",
+  "image": "piphinetwork/i2c-integration:0.1.0",
   "platforms": ["linux"],
   "runtime": {
     "linux": {
-      "type": "proxy",
-      "proxy": {
-        "port": 3674
+      "type": "container",
+      "container": {
+        "image": "piphinetwork/i2c-integration:0.1.0",
+        "ports": [
+          {
+            "container": 3674,
+            "host": 3674,
+            "protocol": "tcp"
+          }
+        ],
+        "environment": {
+          "PIPHI_I2C_PORT": "3674",
+          "PIPHI_ALLOW_MOCK_HARDWARE": "false"
+        },
+        "privileged": true,
+        "restart_policy": {
+          "name": "unless-stopped",
+          "maximum_retry_count": 0
+        }
       },
       "discovery": {
-        "method": "proxy",
+        "method": "direct",
         "inputs": [
           {"name": "adapter", "label": "Adapter", "type": "select", "required": true, "options": ["linux_i2c", "mcp2221a", "ft232h", "mock"], "description": "Use linux_i2c for direct GPIO headers, mcp2221a for Adafruit product 4471, ft232h for FT232H bridges, or mock only when PIPHI_ALLOW_MOCK_HARDWARE=true."},
           {"name": "bus", "label": "I2C Bus", "type": "number", "required": true, "placeholder": "1"},
