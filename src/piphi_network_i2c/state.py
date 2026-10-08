@@ -19,7 +19,7 @@ from .sensors import SensorConfig, discover_devices, hardware_diagnostics, norma
 
 INTEGRATION_ID = "piphi-network-i2c"
 INTEGRATION_NAME = "PiPhi Network I2C Sensors"
-INTEGRATION_VERSION = "0.1.0"
+INTEGRATION_VERSION = "0.1.1"
 
 MANIFEST_PATH = Path(__file__).resolve().parents[1] / "manifest.json"
 MANIFEST = json.loads(MANIFEST_PATH.read_text())
@@ -228,6 +228,15 @@ def refresh_state_for_config(config: I2CSensorRuntimeConfig) -> dict[str, Any]:
     state_payload = read_state(config_to_sensor_config(config))
     registry.update_state(config.id, state_payload)
     return state_payload
+
+
+def refresh_all_state() -> None:
+    for config_id in registry.ids():
+        entry = get_entry_or_404(config_id)
+        refresh_state_for_config(I2CSensorRuntimeConfig.model_validate(entry["config"]))
+
+
+starter.state.provide(refresh_all_state, source=INTEGRATION_ID)
 
 
 def diagnostics_payload() -> dict[str, Any]:

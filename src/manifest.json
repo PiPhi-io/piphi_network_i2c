@@ -2,7 +2,7 @@
   "manifest_version": "1.0",
   "id": "piphi-network-i2c",
   "name": "PiPhi Network I2C Sensors",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local I2C sensor integration for BME680, BME280, BMP280, AHT20, PMSA003I particulate sensors, and generic I2C devices.",
   "maintainer": {
     "name": "PiPhi Integrations Team",
@@ -90,5 +90,10 @@
       "available_commands": [{"id": "refresh", "label": "Refresh", "kind": "action"}],
       "dashboard": {"allowed_widgets": ["sensor-card", "stat", "line-chart", "air-quality-card", "room-climate-card"], "default_widget": "sensor-card"}
     }
-  ]
+  ],
+  "ui": {
+    "experience_packages": [
+      {"registry_id": "io.piphi.i2c-environment", "version_range": ">=0.1,<1", "auto_install": true}
+    ]
+  }
 }
