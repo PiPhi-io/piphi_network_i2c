@@ -2,14 +2,14 @@
   "manifest_version": "1.0",
   "id": "piphi-network-i2c",
   "name": "PiPhi Network I2C Sensors",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Local I2C sensor integration for BME680, BME280, BMP280, AHT20, PMSA003I particulate sensors, and generic I2C devices.",
   "maintainer": {
     "name": "PiPhi Integrations Team",
     "website": "https://github.com/PiPhi-io"
   },
   "license": "Apache-2.0",
-  "image": "piphinetwork/i2c-integration:0.1.1",
+  "image": "piphinetwork/i2c-integration:0.1.2",
   "platforms": [
     "linux"
   ],
@@ -17,7 +17,7 @@
     "linux": {
       "type": "container",
       "container": {
-        "image": "piphinetwork/i2c-integration:0.1.1",
+        "image": "piphinetwork/i2c-integration:0.1.2",
         "ports": [
           {
             "container": 3674,
@@ -418,7 +418,11 @@
   ],
   "ui": {
     "experience_packages": [
-      {"registry_id": "io.piphi.i2c-environment", "version_range": ">=0.1,<1", "auto_install": true}
+      {
+        "registry_id": "io.piphi.i2c-environment",
+        "version_range": ">=0.1,<1",
+        "auto_install": true
+      }
     ]
   }
 }
