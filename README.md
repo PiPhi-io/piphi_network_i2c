@@ -31,6 +31,22 @@ pdm run piphi_network_i2c
 
 The API listens on port `3674` by default.
 
+## Container
+
+The release workflow publishes `piphinetwork/i2c-integration` for `linux/amd64` and `linux/arm64`.
+I2C adapters expose host device nodes dynamically, so the current manifest runs this hardware
+integration as a privileged container. Only install it on a trusted PiPhi host.
+
+```bash
+docker run --rm --privileged \
+  -p 3674:3674 \
+  -v piphi-i2c-state:/.piphinetwork \
+  piphinetwork/i2c-integration:0.1.0
+```
+
+Mock mode remains disabled in published images. For a container-only contract test, add
+`-e PIPHI_ALLOW_MOCK_HARDWARE=true` and configure the `mock` adapter.
+
 ## Configuration
 
 The `/ui-config` endpoint exposes these fields:
